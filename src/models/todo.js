@@ -18,7 +18,18 @@ async function deleteTODO(_id) {
   const deleteResp = await todoModel.deleteOne({ _id });
   return deleteResp;
 }
+
+async function updateTODO(_id,title,description){
+  const updated = await todoModel.updateOne({
+    _id,
+  },{
+    title,
+    description
+  });
+  return updated;
+}
 module.exports = {
   createTODO,
-  deleteTODO
+  deleteTODO,
+  updateTODO
 }
