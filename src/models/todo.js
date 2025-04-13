@@ -1,9 +1,18 @@
+const mongoose =require('mongoose');
+const todoSchema = new mongoose.Schema({
+  title:String,
+  description:String,
+}, {
+  timestamps: true
+});
+const todoModel = mongoose.model(`todo`,todoSchema);
 async function createTodo(title,description) {
-    return {
+  const todo =await todomodel.create(
+    {
       title,
       description,    
-      _id:1
-    }
+    });
+    return todo;
   }
   
   module.exports = {
