@@ -6,6 +6,15 @@ const todoSchema = new mongoose.Schema({
   timestamps: true
 });
 const todoModel = mongoose.model(`todo`, todoSchema);
+
+const userSchema = new mongoose.Schema({
+  username: String,
+  pass: String,
+}, {
+  timestamps: true
+});
+const userModel = mongoose.model(`account`, userSchema);
+
 async function createTODO(title, description) {
   const todo = await todoModel.create(
     {
@@ -36,11 +45,33 @@ async function pageTODO(page,limit){
 }
 
 //User Authentication
+async function createUser(username, pass) {
+  const user = await userModel.create(
+    {
+      username,
+      pass,
+    });
+  return user;
+}
 
+async function loginUser(user, passwd) {
+  const check = await userModel.find({
+    username: user,
+    pass : passwd
+  })
+  if (check.length > 0){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
 
 module.exports = {
   createTODO,
   deleteTODO,
   updateTODO,
-  pageTODO
+  pageTODO,
+  createUser,
+  loginUser
 }

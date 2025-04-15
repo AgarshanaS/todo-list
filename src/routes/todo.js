@@ -3,6 +3,8 @@ const { createTODO } = require('../models/todo');
 const { deleteTODO } = require('../models/todo');
 const { updateTODO } = require('../models/todo');
 const { pageTODO } = require('../models/todo');
+const { createUser } = require('../models/todo');
+const { loginUser } = require('../models/todo');
 const router = express.Router();
 
 router.post('/', async (req,res) => {
@@ -29,6 +31,23 @@ router.get('/',async(req,res)=>{
 });
 
 // User Authentication
+router.post('/account', async (req,res) => {
+    // console.log({body: req.body});
+    const {username,pass} =req.body;
+    const user=await createUser(username,pass);
+    res.send(user)
+});
 
+router.post('/login', async (req,res) => {
+    // console.log({body: req.body});
+    const {username,pass} =req.body;
+    const user=await loginUser(username,pass);
+    if(user){
+    res.send("Login Successful");
+    }
+    else{
+        res.send("User Not Found");
+    }
+});
 
 module.exports = router;
