@@ -28,8 +28,19 @@ async function updateTODO(_id,title,description){
   });
   return updated;
 }
+
+async function pageTODO(page,limit){
+  const skip = (page - 1) * limit;
+  const todos = await todoModel.find().skip(skip).limit(limit);
+  return todos;
+}
+
+//User Authentication
+
+
 module.exports = {
   createTODO,
   deleteTODO,
-  updateTODO
+  updateTODO,
+  pageTODO
 }
